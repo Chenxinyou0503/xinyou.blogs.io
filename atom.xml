@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-27T09:38:39.938Z</updated>
+  <updated>2018-06-29T07:55:40.108Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu安装FastDFS 5.05</title>
+    <link href="http://yoursite.com/2018/06/28/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2018/06/28/个人博客/</id>
+    <published>2018-06-28T02:04:00.000Z</published>
+    <updated>2018-06-29T07:55:40.108Z</updated>
+    
+    <content type="html"><![CDATA[<p>Ubuntu下部署FastDFS 5.05</p><ol><li><p>下载安装libfastcommon</p><pre><code>git clone https://github.com/happyfish100/libfastcommon.gitcd libfastcommon/./make.sh./make.sh install</code></pre><p>确认make没有错误后，执行安装，64位系统默认会复制到/usr/lib64下。这时候需要设置环境变量或者创建软链接</p><pre><code>export LD_LIBRARY_PATH=/usr/lib64/ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so</code></pre></li><li><p>下载安装fastdfs</p><pre><code>tar xzf FastDFS.tar.gzcd FastDFS/./make.sh./make.sh install</code></pre><p>  确认make没有错误后，执行安装，默认会安装到/usr/bin中，并在/etc/fdfs中添加三个配置文件。</p></li><li><p>修改配置文件<br> 文件要自己创建<br> 首先将三个文件的名字去掉sample，暂时只修改以下几点，先让fastdfs跑起来，其余参数调优的时候再考虑。</p><p> tracker.conf 中修改</p><pre><code>base_path=/usr/fastdfs #用于存放日志。</code></pre><p> storage.conf 中修改</p><pre><code>base_path=/usr/fastdfs-storaged #用于存放日志。store_path0=/usr/fastdfs0 #存放数据，若不设置默认为前面那个。tracker_server=192.168.128.128:22122 #指定tracker服务器地址。</code></pre><p> client.conf 中修改</p><pre><code>base_path=/usr/fastdfs #用于存放日志。tracker_server=192.168.128.128:22122 #指定tracker服务器地址。</code></pre></li><li><p>启动tracker和storage </p><pre><code>/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></pre></li><li><p>检查进程</p><pre><code>root@ubuntu:~# ps -ef |grep fdfsroot       7819      1  0 15:24 ?        00:00:00 /usr/bin/fdfs_trackerd /etc/fdfs/tracker.confroot       8046      1  0 15:36 ?        00:00:01 fdfs_storaged /etc/fdfs/storage.conf start</code></pre><p> 表示启动ok了，若有错误，可以在/usr/fastdfs目录下检查日志。</p></li><li><p>上传/删除测试</p></li></ol><p>使用自带的fdfs_test来测试，使用格式如下：</p><pre><code>root@ubuntu:~# fdfs_test /etc/fdfs/client.conf upload /home/steven/01.jpg     group_name=group1, ip_addr=192.168.29.132, port=23000 storage_upload_by_filename group_name=group1, remote_filename=M00/00/00/wKgdhFTV0ZmAP3AZAPk-Io7D4w8580.jpg example file url: http://192.168.29.132/group1/M00/00/00/wKgdhFTV0ZmAP3AZAPk-Io7D4w8580.jpg storage_upload_slave_by_filename group_name=group1, remote_filename=M00/00/00/wKgdhFTV0ZmAP3AZAPk-Io7D4w8580_big.jpg   example file url: http://192.168.29.132/group1/M00/00/00/wKgdhFTV0ZmAP3AZAPk-Io7D4w8580_big.jpg</code></pre><p>7、使用fdfs_delete_file来删除文件，格式如下：</p><pre><code>fdfs_delete_file /etc/fdfs/client.conf group1/M00/00/00/wKgdhFTV11uAXgKWAPk-Io7D4w8667.jpg</code></pre><p>   可以看到，上传ok了，这里会生成两个文件，这是fastdfs的主/从文件特性，以后再介绍。 example file url 是不能在浏览器中直接打开的，除非配合nginx使用，这里我不需要了。</p><pre><code>删除文件需要完整的group_name和remote_filename。</code></pre><p>8、建议的关闭防火墙命令</p><pre><code>iptables -P INPUT ACCEPT 　　iptables -P FORWARD ACCEPT 　　iptables -P OUTPUT ACCEPT 　　iptables -F </code></pre><p>9、安装nginx</p><p>   FastDFS的nginx插件fastdfs-nginx-module_v1.16.tar.gz</p><pre><code>tar zxvf fastdfs-nginx-module_v1.16.tar.gz </code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Ubuntu下部署FastDFS 5.05&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;下载安装libfastcommon&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/happyfish100/libfastcommon.git
+cd lib
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
