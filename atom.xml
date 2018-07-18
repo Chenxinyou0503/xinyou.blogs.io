@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-18T02:59:37.704Z</updated>
+  <updated>2018-07-18T10:04:17.881Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu 安装redis集群</title>
+    <link href="http://yoursite.com/2018/07/18/Ubuntu-%E5%AE%89%E8%A3%85redis%E9%9B%86%E7%BE%A4/"/>
+    <id>http://yoursite.com/2018/07/18/Ubuntu-安装redis集群/</id>
+    <published>2018-07-18T10:00:24.000Z</published>
+    <updated>2018-07-18T10:04:17.881Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.先安装 Redis，保证Redis能在单节点运行</p><pre><code>sudo wget http://download.redis.io/releases/redis-3.2.6.tar.gz</code></pre><ol start="2"><li><p>解压文件</p><pre><code>sudo tar -zxvf redis-3.2.6.tar.gz</code></pre><p> 我把redis-3.2.6/ 移动到了/usr/local/目录下</p></li></ol><p>3.安装gcc</p><pre><code>apt-get install gcc sudo apt-get install build-essential</code></pre><p>4.进入到redis-3.2.6目录下，依次执行下面两条命令：</p><pre><code>    sudo make    sudo make install会在redis-3.2.6目录下，生成src文件 ，会生成redis-server等运行命令</code></pre><ol start="5"><li><p>更改redis.conf文件</p><p> 该文件在redis-3.2.6文件目录下 将“daemonize no”修改为“daemonize yes” 更改bind 127.0.0.1 改为自己局域网IP（可以不改）</p><pre><code>cd /usr/local/redis-3.2.6/src/redis-server redis.conf </code></pre><p> 启动成功<br> 输入： </p><pre><code>redis-cli -p 6379  </code></pre><p> 然后执行命令ping 输入pong，则证明服务启动成功<br> 执行命令，</p><pre><code>set key hellowordget key </code></pre></li></ol><p>6.搭建集群</p><pre><code>准备三台机器，36，38，39首先在/usr/local/目录下 新建redis-cluster目录，然后cd redis-cluster 新建7000,7001目录 复制redis-server文件分别到7000,7001目录中并新建redis.conf 文件，添加如下内容到redis.conf    port 7000 #端口 和目录一样    cluster-enabled yes     cluster-config-file nodes.conf    bind 192.168.244.38 #绑定IP地址，如果不添加，添加集群的时候会报错，    cluster-node-timeout 5000    daemonize yes    # 后台运行    appendonly yes另外两台机器一样配置，注意IP地址的更改在所有集群都配置完以后，依次运行一下命令    #!/bin/bash    pkill -9 redis;    cd /usr/local/redis-cluster/7000/    /usr/local/redis-cluster/7000/redis-server /usr/local/redis-cluster/7000/redis.conf;    cd /usr/local/redis-cluster/7001/    /usr/local/redis-cluster/7001/redis-server /usr/local/redis-cluster/7001/redis.conf;所有机器启动完成以后，找一台机器，安装ruby    sudo apt-get update    sudo apt-get install ruby    sudo gem install redis安装完成以后进入 redis-3.2.6/src/文件目录下，运行一下文件    ./redis-trib.rb create --replicas 1 192.168.244.36:7000 192.168.244.38:7000 192.168.244.39:7000 192.168.244.36:7001 192.168.244.38:7001 192.168.244.39:7001成功以后会出现一下信息：    &gt;&gt;&gt; Creating cluster    &gt;&gt;&gt; Performing hash slots allocation on 6 nodes...    Using 3 masters:    192.168.244.36:7000    192.168.244.38:7000    192.168.244.39:7000    Adding replica 192.168.244.38:7001 to 192.168.244.36:7000    Adding replica 192.168.244.36:7001 to 192.168.244.38:7000    Adding replica 192.168.244.39:7001 to 192.168.244.39:7000    M: 0ee8340c886afde83aa209d36d02cc7d9c4ff465 192.168.244.36:7000    slots:0-5460 (5461 slots) master    M: c0823aefa158d8af30ac1c58c3753be5db7d69bd 192.168.244.38:7000    slots:5461-10922 (5462 slots) master    M: 4f4bb2f4f67f4a292bf2c5ec7445f0460e0a4249 192.168.244.39:7000    slots:10923-16383 (5461 slots) master    S: e371a20971b26f92af75448e08fdce4d22bcd40c 192.168.244.36:7001    replicates c0823aefa158d8af30ac1c58c3753be5db7d69bd    S: a3c4e314d3b5996fa79d17f60bec0d8debf3bfa4 192.168.244.38:7001    replicates 0ee8340c886afde83aa209d36d02cc7d9c4ff465    S: be8743b28ae71f7708f8d5ef40bc6469687e7300 192.168.244.39:7001    replicates 4f4bb2f4f67f4a292bf2c5ec7445f0460e0a4249    Can I set the above configuration? (type &apos;yes&apos; to accept): yes输入yes以后出现以下信息：    &gt;&gt;&gt; Nodes configuration updated    &gt;&gt;&gt; Assign a different config epoch to each node    &gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster    Waiting for the cluster to join...    &gt;&gt;&gt; Performing Cluster Check (using node 192.168.244.36:7000)    M: 0ee8340c886afde83aa209d36d02cc7d9c4ff465 192.168.244.36:7000    slots:0-5460 (5461 slots) master    1 additional replica(s)    S: e371a20971b26f92af75448e08fdce4d22bcd40c 192.168.244.36:7001    slots: (0 slots) slave    replicates c0823aefa158d8af30ac1c58c3753be5db7d69bd    M: c0823aefa158d8af30ac1c58c3753be5db7d69bd 192.168.244.38:7000    slots:5461-10922 (5462 slots) master    1 additional replica(s)    S: be8743b28ae71f7708f8d5ef40bc6469687e7300 192.168.244.39:7001    slots: (0 slots) slave    replicates 4f4bb2f4f67f4a292bf2c5ec7445f0460e0a4249    S: a3c4e314d3b5996fa79d17f60bec0d8debf3bfa4 192.168.244.38:7001    slots: (0 slots) slave    replicates 0ee8340c886afde83aa209d36d02cc7d9c4ff465    M: 4f4bb2f4f67f4a292bf2c5ec7445f0460e0a4249 192.168.244.39:7000    slots:10923-16383 (5461 slots) master    1 additional replica(s)    [OK] All nodes agree about slots configuration.    &gt;&gt;&gt; Check for open slots...    &gt;&gt;&gt; Check slots coverage...    [OK] All 16384 slots covered.集群安装成功，检查集群健康命令：    ./redis-trib.rb check 192.168.244.36:7000</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.先安装 Redis，保证Redis能在单节点运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo wget http://download.redis.io/releases/redis-3.2.6.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Ubuntu 更改IP不生效问题</title>
