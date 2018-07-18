@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Ubuntu 更改IP不生效问题]]></title>
+    <url>%2F2018%2F07%2F18%2FUbuntu-%E6%9B%B4%E6%94%B9IP%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[Ubuntu 修改IP地址不生效1、Ubuntu修改静态IP不生效 source /etc/network/interfaces.d/* # The loopback network interface auto lo iface lo inet loopback # The primary network interface auto ens33 iface ens33 inet static address 192.168.244.36 netmask 255.255.0.0 gateway 192.168.0.1 service networking restart 和ifdown ens33 都不生效，ifconfig 结果还是原来的地址解决方案： ip addr flush dev ens33 ifdown ens33 ifup ens33]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Ubuntu 换源]]></title>
     <url>%2F2018%2F07%2F18%2FUbuntu-%E6%8D%A2%E6%BA%90%2F</url>
     <content type="text"><![CDATA[1.备份原source.list 2.替换为一下内容 deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse deb http://cn.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse deb http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse]]></content>
