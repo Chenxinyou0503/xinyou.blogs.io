@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-29T07:55:40.108Z</updated>
+  <updated>2018-07-18T02:15:43.678Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu 换源</title>
+    <link href="http://yoursite.com/2018/07/18/Ubuntu-%E6%8D%A2%E6%BA%90/"/>
+    <id>http://yoursite.com/2018/07/18/Ubuntu-换源/</id>
+    <published>2018-07-18T02:04:31.000Z</published>
+    <updated>2018-07-18T02:15:43.678Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.备份原source.list</p><p>2.替换为一下内容</p><pre><code>deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse      deb http://cn.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiversedeb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiversedeb http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.备份原source.list&lt;/p&gt;
+&lt;p&gt;2.替换为一下内容&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse     
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 16.04设置IP、网关、DNS</title>
+    <link href="http://yoursite.com/2018/07/18/Ta/"/>
+    <id>http://yoursite.com/2018/07/18/Ta/</id>
+    <published>2018-07-18T01:15:00.000Z</published>
+    <updated>2018-07-18T01:32:42.957Z</updated>
+    
+    <content type="html"><![CDATA[<p>Ubuntu 16.04设置IP、网关、DNS<br>1、修改IP地址</p><p>打开/etc/network/interfaces</p><pre><code>sudo vim /etc/network/interfaces</code></pre><p>加入以下语句：</p><pre><code>auto eth0 #要设置的网卡iface eth0 inet static #设置静态IP；如果是使用自动IP用dhcp，后面的不用设置，一般少用address 192.168.244.35#IP地址netmask 255.255.0.0 #子网掩码gateway 192.168.0.1 #网关</code></pre><p>2、修改DNS</p><p>打开/etc/resolv.conf</p><pre><code>sudo vim /etc/resolv.conf</code></pre><p>注意：上面设置的文件重启后会覆盖，如果要持久的保存，需要修改：/etc/resolvconf/resolv.conf.d/base</p><p>改为如下内容：</p><pre><code>search localdomain #如果本Server为DNS服务器，可以加上这一句，如果不是，可以不加nameserver 172.16.3.4 #希望修改成的DNSnameserver 172.16.3.3 #希望修改成的DNS</code></pre><p>3、重启服务生效</p><p>先运行一次，然后在rc.local里加入这个重启网络配置的命令：</p><pre><code>sudo /etc/init.d/networking restart #使网卡配置生效sudo /etc/init.d/resolvconf restart #使DNS生效service networking restart</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Ubuntu 16.04设置IP、网关、DNS&lt;br&gt;1、修改IP地址&lt;/p&gt;
+&lt;p&gt;打开/etc/network/interfaces&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/network/interfaces
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加入以下
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Ubuntu安装FastDFS 5.05</title>
