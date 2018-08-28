@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://www.xinyouwx.club/2018/06/27/hello-world/index.html">
+<meta property="og:title" content="Java 动态代理">
+<meta property="og:url" content="https://www.xinyouwx.club/2018/08/28/Java-动态代理/index.html">
 <meta property="og:site_name" content="陈新友的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-27T09:38:39.938Z">
+<meta property="og:updated_time" content="2018-08-28T07:00:17.926Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Java 动态代理">
+<meta name="twitter:description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://www.xinyouwx.club/2018/06/27/hello-world/"/>
+  <link rel="canonical" href="https://www.xinyouwx.club/2018/08/28/Java-动态代理/"/>
 
 
 
 
 
-  <title>Hello World | 陈新友的博客</title>
+  <title>Java 动态代理 | 陈新友的博客</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.xinyouwx.club/2018/06/27/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://www.xinyouwx.club/2018/08/28/Java-动态代理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈新友">
@@ -253,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Java 动态代理</h1>
         
 
         <div class="post-meta">
@@ -265,8 +265,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-27T17:38:39+08:00">
-                2018-06-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-28T14:48:54+08:00">
+                2018-08-28
               </time>
             
 
@@ -303,15 +303,106 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>Java 动态代理</p>
+<p>最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾</p>
+<p>1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，</p>
+<p>下面先看看Java API 对这两个类的描述：</p>
+<pre><code>InvocationHandler is the interface implemented by the invocation handler of a proxy instance. 
+Each proxy instance has an associated invocation handler. When a method is invoked on a proxy instance, the method invocation is encoded and dispatched to the invoke method of its invocation handler.
+</code></pre><p>每个动态代理类都需要实现InvocationHandler ,并且每个类都关联一个Handler, 当通过代理对象调用方法的时候，这个方法调用被转发由InvocationHandler这个接口的invoke方法来调用，下面是invoke的方法：</p>
+<pre><code>Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+Proxy：指代理的对象
+method: 指调用真实对象的方法的method对象
+args: 指调用对象方法的参数
+</code></pre><p>Proxy类：</p>
+<p>官方API介绍：</p>
+<pre><code>Proxy provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created by those methods.
+</code></pre><p>Proxy这个类的作用就是动态创建一个代理的类，它提供了很多方法，但是我们只用到了newProxyInstance这个方法：</p>
+<pre><code>public static Object newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces,  InvocationHandler h)  throws IllegalArgumentException
+loader: 一个ClassLoader对象，定义了由那个ClassLoader对象来对生成的代理对象进行加载
+interfaces: 一个interfaces对象数组，表示需要给代理对象提供接口，该对象就会实现该接口（多态）
+h：一个InvocationHandler对象，表示动态代理对象在调用方法的时候，会关联到该InvocationHandler对象上
+</code></pre><p>2.下面我们来动手实现这个过程</p>
+<p>假如你（被代理人）有一栋房子，需要对外出租，但是你又不想亲自去管理，那么你就把房子委托给第三方（代理）管理，你只需要负责收房租就可以了，这个过程我们可以用动态代理来实现，代码如下：</p>
+<p>房屋的操作：</p>
+<pre><code>public interface RentHouse {
+    public void rent();
+    public void charge(String string);
+}
+</code></pre><p>房东（你）的操作：</p>
+<pre><code>public class HouseOwner implements RentHouse {
+    @Override
+    public void rent() {
+       System.out.println(&quot;I have a beautiful house , I want rent to it &quot;);
+    }
+
+    @Override
+    public void charge(String string) {
+        System.out.println(&quot;house owner get :&quot; + string + &quot;money&quot;);
+    }
+}
+</code></pre><p>第三方的操作：</p>
+<pre><code>public class DynamicProxy implements InvocationHandler {
+    //这里是真实代理的对象（房东）
+    private Object object;
+
+    public DynamicProxy(Object object) {
+        this.object = object;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        //在代理真实对象前我们可以添加一些自己的操作 比如说，收取中介费，
+        System.out.println(&quot;before &quot; + method.getName() + &quot; house&quot;);
+
+        System.out.println(&quot;Method:&quot; + method.getName());
+        if (method.getName().equals(&quot;charge&quot;)) {
+            //中介收取100元中介费
+            int result = Integer.parseInt(args[0].toString()) - 100;
+            args[0] = String.valueOf(result);
+            System.out.println(&quot;I will get 100 free.&quot;);
+        }
+        method.invoke(object, args);
+        //在代理真实对象后我们也可以添加一些自己的操作
+        System.out.println(&quot;after house clean &quot;);
+        return null;
+    }
+}
+</code></pre><p>客户端：</p>
+<pre><code>public class Client {
+    public static void main(String[] args) {
+        // 这里是要代理的对象
+        HouseOwner proxySubject = new HouseOwner();
+        // 这个是第三方的操作，代理那个，就把那个对象传进去
+        InvocationHandler handler = new DynamicProxy(proxySubject);
+        /** 通过Proxy的 newProxyInstance 方法来创建代理对象，
+         * 第一个参数是handler.getClass().getClassLoader() ,这里我们用handler类的ClassLoader对象来加载需要代理的对象
+         * 通俗的将就是，我们需要第三方的加载器来加载这个房东对象，来行使房东对外出租房子的事情，
+         * 第二个参数是proxySubject.getClass().getInterfaces()，这里是为代理对象提供真实对象的接口，表示可以直接调用该对象的接口
+         * 第三个参数是handler 表示代理对象关联上了InvocationHandler对象上了
+         */
+        //动态代理类
+        RentHouse subjectSt = (RentHouse) Proxy.newProxyInstance(handler.getClass().getClassLoader(),
+                proxySubject.getClass().getInterfaces(), handler);
+        System.out.println(&quot;123&quot; + subjectSt.getClass().getName());
+        subjectSt.rent();
+        // 这里输入1000 ，看看房东到手多少钱
+        subjectSt.charge(&quot;1000&quot;);
+    }
+}
+</code></pre><p>运行输出：</p>
+<pre><code>123com.sun.proxy.$Proxy0
+before rent house
+Method:rent
+I have a beautiful house , I want rent to it 
+after house clean
+before charge house
+Method:charge
+I will get 100  free.
+house owner get :900money
+after house clean
+</code></pre><p>3.动态代理的局限性</p>
+<p>从动态代理的使用方法中我们看到其实可以被增强的方法都是实现了借口的（不实现借口的public方法也可以通过继承被代理类来使用），代码中的HouseOwner继承了RentHouse，而对于private方法JDK的动态代理无能为力</p>
 
       
     </div>
@@ -336,15 +427,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/07/18/Ubuntu-安装redis集群/" rel="next" title="Ubuntu 安装redis集群">
+                <i class="fa fa-chevron-left"></i> Ubuntu 安装redis集群
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/28/个人博客/" rel="prev" title="Ubuntu安装FastDFS 5.05">
-                Ubuntu安装FastDFS 5.05 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -396,17 +487,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -455,22 +537,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
