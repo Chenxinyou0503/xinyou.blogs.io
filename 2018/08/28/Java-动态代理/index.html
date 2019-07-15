@@ -83,17 +83,17 @@
 
 
 
-<meta name="description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
+<meta name="description" content="Java 动态代理最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，下面先看看Java API 对这两个类的描述： InvocationHandler is the inte">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 动态代理">
 <meta property="og:url" content="https://www.xinyouwx.club/2018/08/28/Java-动态代理/index.html">
 <meta property="og:site_name" content="陈新友的博客">
-<meta property="og:description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
+<meta property="og:description" content="Java 动态代理最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，下面先看看Java API 对这两个类的描述： InvocationHandler is the inte">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-28T07:00:17.926Z">
+<meta property="og:updated_time" content="2018-08-28T07:05:31.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 动态代理">
-<meta name="twitter:description" content="Java 动态代理 最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的， 下面先看看Java API 对这两个类的描述： InvocationHandler is the in">
+<meta name="twitter:description" content="Java 动态代理最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾 1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，下面先看看Java API 对这两个类的描述： InvocationHandler is the inte">
 
 
 
@@ -303,10 +303,8 @@
       
 
       
-        <p>Java 动态代理</p>
-<p>最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾</p>
-<p>1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，</p>
-<p>下面先看看Java API 对这两个类的描述：</p>
+        <h2 id="Java-动态代理"><a href="#Java-动态代理" class="headerlink" title="Java 动态代理"></a>Java 动态代理</h2><p>最近在学习spring的时候，AOP 的原理就是动态代理机制，这里对Java动态代理做一个回顾</p>
+<h6 id="1-在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler-Interface-一个是Proxy-Class-这些是动态代理机制中必须用到的，"><a href="#1-在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler-Interface-一个是Proxy-Class-这些是动态代理机制中必须用到的，" class="headerlink" title="1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，"></a>1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，</h6><p>下面先看看Java API 对这两个类的描述：</p>
 <pre><code>InvocationHandler is the interface implemented by the invocation handler of a proxy instance. 
 Each proxy instance has an associated invocation handler. When a method is invoked on a proxy instance, the method invocation is encoded and dispatched to the invoke method of its invocation handler.
 </code></pre><p>每个动态代理类都需要实现InvocationHandler ,并且每个类都关联一个Handler, 当通过代理对象调用方法的时候，这个方法调用被转发由InvocationHandler这个接口的invoke方法来调用，下面是invoke的方法：</p>
@@ -322,8 +320,7 @@ args: 指调用对象方法的参数
 loader: 一个ClassLoader对象，定义了由那个ClassLoader对象来对生成的代理对象进行加载
 interfaces: 一个interfaces对象数组，表示需要给代理对象提供接口，该对象就会实现该接口（多态）
 h：一个InvocationHandler对象，表示动态代理对象在调用方法的时候，会关联到该InvocationHandler对象上
-</code></pre><p>2.下面我们来动手实现这个过程</p>
-<p>假如你（被代理人）有一栋房子，需要对外出租，但是你又不想亲自去管理，那么你就把房子委托给第三方（代理）管理，你只需要负责收房租就可以了，这个过程我们可以用动态代理来实现，代码如下：</p>
+</code></pre><h6 id="2-下面我们来动手实现这个过程"><a href="#2-下面我们来动手实现这个过程" class="headerlink" title="2.下面我们来动手实现这个过程"></a>2.下面我们来动手实现这个过程</h6><p>假如你（被代理人）有一栋房子，需要对外出租，但是你又不想亲自去管理，那么你就把房子委托给第三方（代理）管理，你只需要负责收房租就可以了，这个过程我们可以用动态代理来实现，代码如下：</p>
 <p>房屋的操作：</p>
 <pre><code>public interface RentHouse {
     public void rent();
@@ -401,8 +398,7 @@ Method:charge
 I will get 100  free.
 house owner get :900money
 after house clean
-</code></pre><p>3.动态代理的局限性</p>
-<p>从动态代理的使用方法中我们看到其实可以被增强的方法都是实现了借口的（不实现借口的public方法也可以通过继承被代理类来使用），代码中的HouseOwner继承了RentHouse，而对于private方法JDK的动态代理无能为力</p>
+</code></pre><h6 id="3-动态代理的局限性"><a href="#3-动态代理的局限性" class="headerlink" title="3.动态代理的局限性"></a>3.动态代理的局限性</h6><p>从动态代理的使用方法中我们看到其实可以被增强的方法都是实现了借口的（不实现借口的public方法也可以通过继承被代理类来使用），代码中的HouseOwner继承了RentHouse，而对于private方法JDK的动态代理无能为力</p>
 
       
     </div>
@@ -487,8 +483,17 @@ after house clean
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,6 +543,22 @@ after house clean
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-动态代理"><span class="nav-number">1.</span> <span class="nav-text">Java 动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler-Interface-一个是Proxy-Class-这些是动态代理机制中必须用到的，"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">1.在Java动态代理机制中有两个重要的类或接口，一个是InvocationHandler(Interface),一个是Proxy(Class), 这些是动态代理机制中必须用到的，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-下面我们来动手实现这个过程"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">2.下面我们来动手实现这个过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-动态代理的局限性"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">3.动态代理的局限性</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -551,7 +572,7 @@ after house clean
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
